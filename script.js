@@ -41,3 +41,14 @@ function getComputerChoice() {
 // Test getComputerChoice function
 console.log("Computer's choice:", getComputerChoice());
 
+function getUserChoice() {
+    const choices = ["rock", "paper", "scissors"];
+    let choice = prompt("Please choose rock, paper, or scissors:").toLowerCase();
+    while (choices.includes(choice) === false) {
+        choice = prompt("Invalid choice. Please choose rock, paper, or scissors:").toLowerCase();
+    } 
+    return choice;
+}
+
+// Test getUserChoice function
+console.log("User's choice:", getUserChoice());
