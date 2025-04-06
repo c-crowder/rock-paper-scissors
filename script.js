@@ -1,6 +1,3 @@
-// Test Script File Works
-console.log("Hello, World!");
-
 // Sudo Code
 // 1. Create a function to get the computer's choice
 //     a. Select one of the three options randomly: rock, paper, or scissors
@@ -47,33 +44,53 @@ function getUserChoice() {
     return choice;
 }
 
-let humanScore = 0;
-let computerScore = 0;
 
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+function playGame(rounds=5) {
+    console.log("Welcome to Rock, Paper, Scissors!");
+    console.log("You will play 5 rounds against the computer.");
+    let humanScore = 0;
+    let computerScore = 0;
+    
+    // Helper Function to capitalize the first letter of a string
+    // This is used to make the output more readable
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
+    // Logic to play a single round of the game
+    // This function takes the user's choice and the computer's choice as arguments
+    function playRound(humanChoice, computerChoice) {
+        console.log("User's choice:", capitalize(humanChoice));
+        console.log("Computer's choice:", capitalize(computerChoice));
+        if (humanChoice === computerChoice) {
+            console.log("It's a tie! Try Again!");
+            playRound(getUserChoice(), getComputerChoice());
+        } else if (
+            (humanChoice === "rock" && computerChoice === "scissors") ||
+            (humanChoice === "paper" && computerChoice === "rock") ||
+            (humanChoice === "scissors" && computerChoice === "paper")
+        ) {
+            console.log(`You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}`);
+            humanScore++;
+        }
+        else {
+            console.log(`You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}`);
+            computerScore++;
+        }
+    }
+
+    // Loop to play multiple rounds of the game
+    for (let i = 0; i < rounds; i++) {
+        const humanChoice = getUserChoice();
+        const computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+        if (i !== rounds - 1) {
+            console.log(`Round: ${i+1} Score: You ${humanScore} - Computer ${computerScore}`);
+        }
+    }
+    // Display the final score to the user
+    console.log(`Final Score: You ${humanScore} - Computer ${computerScore}`);
 }
 
-function playRound(humanChoice, computerChoice) {
-    console.log("User's choice:", capitalize(humanChoice));
-    console.log("Computer's choice:", capitalize(computerChoice));
-    if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
-    } else if (
-        (humanChoice === "rock" && computerChoice === "scissors") ||
-        (humanChoice === "paper" && computerChoice === "rock") ||
-        (humanChoice === "scissors" && computerChoice === "paper")
-    ) {
-        console.log(`You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}`);
-        humanScore++;
-    }
-    else {
-        console.log(`You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}`);
-        computerScore++;
-    }
-}
-
-const humanChoice = getUserChoice();
-const computerChoice = getComputerChoice();
-
-playRound(humanChoice, computerChoice);
+// Call the playGame function to start the game
+playGame(5);
